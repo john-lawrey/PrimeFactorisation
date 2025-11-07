@@ -40,6 +40,41 @@ def pfactors(candidate: int, timelimit: float = float('inf')):
         yield (remainder, 1)
 
 
+def parsing():
+    """Parses the command line arguments and returns a namespace
+       that can be used to get them."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--timelimit', type=float, default=float('inf'),
+                        help="Time limit in seconds")
+    return parser.parse_args()
+
+
+def process_line(line):
+    """Returns an integer if the line contains a valid integer.
+       Otherwise raises a TypeError."""
+    line = line.strip("\n ")
+
+    # Allows comments with '#'.
+    uncommented = line.split("#", maxsplit=1)[0]
+    if uncommented == '':
+        # Special case for comment lines.
+        return -1
+    if not uncommented.isdigit():
+        raise TypeError("Input must be a positive integer (e.g., '34')")
+    return int(uncommented)
+
+
+def output_factors(input_lines, args):
+    """Prints the factored forms of the input string to stdout."""
+    for line in input_lines:
+        integer = process_line(line)
+        if integer == -1:  # Indicates a comment.
+            continue
+        for factor, exponent in pfactors(integer, args.timelimit):
+            print(f"{factor}^{exponent}, ", end="")
+        print()
+
+
 def main():
     """Reads lines of integers from standard input and outputs the factored
     form of each one.
@@ -50,25 +85,11 @@ def main():
 
     When entering integers via the terminal use an EOF signal to terminate.
 
-    Raises a TypeError if it encounters a non-integer."""
+    Raises a TypeError if it encounters a non-integer. Inline Comments can be
+    made using the # character."""
 
-    # Argument parsing.
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--timelimit', type=float, default=float('inf'),
-                        help="Time limit in seconds")
-    args = parser.parse_args()
-
-    # Input processing.
-    lines = sys.stdin.readlines()
-    for line in lines:
-        val = line.strip('\n')
-        if not val.isdigit():
-            raise TypeError("Input must be a positive integer (e.g., '34')")
-        int_val = int(val)
-        # Output generation.
-        for factor, exponent in pfactors(int_val, args.timelimit):
-            print(f"{factor}^{exponent}, ", end="")
-        print()
+    args = parsing()
+    output_factors(sys.stdin.readlines(), args)
 
 
 if __name__ == "__main__":
