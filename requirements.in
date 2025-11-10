@@ -1,0 +1,8 @@
+# requirements.in
+pytest
+pip-tools
+pip <= 24.2  # Found issues with pip 25.3 after use_pep517 was removed as an attribute of the InstallationRequirement class.
+# From my understanding this class is generally meant to be used only internally, but piptools refers to it as part of it 
+# being an "extension" of pip functionality and therefore uses this internal component.
+# This issue only matters for generating lock files with pip-tools, not the factorisation methods.
+# Error: AttributeError: 'InstallRequirement' object has no attribute 'use_pep517' arises when piptools\utils.py tries to get use_pep517 from the InstallRequirement class defined in pip/internall/req_install
