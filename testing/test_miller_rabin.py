@@ -32,7 +32,7 @@ def large_composite_tests():
 
 
 def test_miller_rabin():
-    """Contains testcases for the miller_rabin() function from miller_rabin."""
+    """Contains testcases for the miller_rabin function from miller_rabin."""
     assert miller_rabin(1, [2]) is False
     assert miller_rabin(3, [2]) is True
     assert miller_rabin(20, [2]) is False
@@ -42,9 +42,13 @@ def test_miller_rabin():
     assert is_probable_prime(7589*7417) is False
     large_prime_tests()
 
+    # Test reliability.
+    for _ in range(1000):
+        assert not is_probable_prime(4)
+
 
 def test_generate_basis():
-    """Contains testcases for the miller_rabin() function from miller_rabin."""
+    """Contains testcases for the generate_basis function from miller_rabin."""
     for n in range(100):
         assert len(list(generate_basis(basis_size=n))) == n
     assert next(generate_basis(bits=8)) < 2**8
