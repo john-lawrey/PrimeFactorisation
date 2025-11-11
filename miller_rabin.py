@@ -38,6 +38,8 @@ def miller_rabin(candidate, basis):
         return True
     if candidate == 1:
         return False
+    if candidate % 2 == 0:
+        return False
 
     for base in basis:
         # Check coprimality.
