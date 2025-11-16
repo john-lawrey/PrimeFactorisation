@@ -9,10 +9,10 @@ Created by John Lawrey on 7.11.2025."""
 # Imports.
 import sys
 import argparse
-import time  # Used for setting maximum computation time.
+import time
 
 
-def pfactors(candidate: int, timelimit: float = float('inf')):
+def pfactors(candidate, timelimit=float('inf')):
     """Yields tuples of the form (prime, exponent) for each prime factor of
     candidate as it finds them. If computation is ended early
     it will yield (remainder, 1) as the final tuple.
