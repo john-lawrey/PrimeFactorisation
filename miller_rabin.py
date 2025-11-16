@@ -11,7 +11,7 @@ from math import gcd
 
 def generate_basis(basis_size=-1, bits=5):
     """Yields random integers to be used as bases
-       for a Miller-Rabin Primality Test.
+    for a Miller-Rabin Primality Test.
 
     basis_size allows the size of the generated base to be configured.
     If set to -1 it will act as a infinite generator.

@@ -42,7 +42,7 @@ def pfactors(candidate, timelimit=float('inf')):
 
 def parsing():
     """Parses the command line arguments and returns a namespace
-       that can be used to get them."""
+    that can be used to get them."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--timelimit', type=float, default=float('inf'),
                         help="Time limit in seconds")
@@ -51,7 +51,7 @@ def parsing():
 
 def process_line(line):
     """Returns an integer if the line contains a valid integer.
-       Otherwise raises a TypeError."""
+    Otherwise raises a TypeError."""
     line = line.strip("\n ")
 
     # Allows comments with '#'.

@@ -11,7 +11,7 @@ import random
 
 def next_prime(n):
     """Returns the next prime number sequentially after
-       a given integer n, including n if n is prime. """
+    a given integer n, including n if n is prime. """
 
     while not is_probable_prime(n):
         n += 1
@@ -20,7 +20,7 @@ def next_prime(n):
 
 def random_prime(bits=1024, seed=None):
     """Returns a random prime number with the
-       provided number of bits."""
+    provided number of bits."""
     if bits <= 1:
         raise ValueError("No prime numbers of the provided bit length.")
     if seed is not None:

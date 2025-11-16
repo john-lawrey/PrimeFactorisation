@@ -15,7 +15,7 @@ TL = 0.1
 def test_pfactors():
     """Contains testcases for the pfactors() function from pf.
 
-        We ignore the order in which the prime factors are returned."""
+    We ignore the order in which the prime factors are returned."""
     assert set(pfactors(1)) == set()
     assert set(pfactors(3)) == {(3, 1)}
     assert set(pfactors(20)) == {(2, 2), (5, 1)}
