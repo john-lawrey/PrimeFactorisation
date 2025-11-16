@@ -12,16 +12,11 @@ import argparse
 import time
 
 
-def pfactors(candidate, timelimit=float('inf')):
-    """Yields tuples of the form (prime, exponent) for each prime factor of
-    candidate as it finds them. If computation is ended early
-    it will yield (remainder, 1) as the final tuple.
-
-    Candidate: a positive integer to be factored."""
-
+def trial_division(candidate, timelimit=float('inf')):
+    """Trial Division method. See pfactors() for details
+    on input and output."""
     stime = time.time()
     remainder = candidate
-    # Trial Division.
     divisor = 2
     while divisor * divisor <= remainder:  # math.sqrt would be inefficient.
         exp = 0
@@ -37,7 +32,24 @@ def pfactors(candidate, timelimit=float('inf')):
             break
 
     if remainder != 1:
-        yield (remainder, 1)
+        return (remainder, 1)
+
+
+def pfactors(candidate, timelimit=float('inf')):
+    """Yields tuples of the form (prime, exponent) for each prime factor of
+    candidate as it finds them. If computation is ended early
+    it will yield (remainder, 1) as the final tuple.
+
+    Candidate: a positive integer to be factored."""
+
+    last_factor = None
+    for factor in trial_division(candidate, timelimit):
+        last_factor = factor
+        if last_factor is not None:
+            yield last_factor
+    if last_factor is not None:
+        return last_factor
+
 
 
 def parsing():
