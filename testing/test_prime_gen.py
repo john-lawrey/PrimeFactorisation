@@ -6,6 +6,7 @@ Created by John Lawrey on 11.11.2025."""
 
 # Imports.
 from prime_gen import next_prime, random_prime
+from miller_rabin import is_probable_prime
 import pytest
 
 
@@ -29,6 +30,8 @@ def test_random_prime():
         random_prime(bits=-4)
     assert random_prime(bits=3) in {5, 7}
     assert random_prime() > 2**(1023) - 1
+    for _ in range(100):
+        assert is_probable_prime(random_prime(bits=32))
 
 
 if __name__ == "__main__":
