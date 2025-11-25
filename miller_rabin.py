@@ -23,7 +23,7 @@ def generate_basis(basis_size=-1, bits=5):
     count = 0
 
     while count < basis_size or basis_size == -1:
-        yield random.randint(2, 2**bits)
+        yield random.randint(2, 2**bits-1)
         count += 1
 
 
