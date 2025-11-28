@@ -10,8 +10,6 @@ Created by John Lawrey on 7.11.2025."""
 import sys
 import argparse
 import time
-from math import sqrt, ceil
-from miller_rabin import is_probable_prime
 
 
 def trial_division(candidate, timelimit=float('inf')):
@@ -37,28 +35,6 @@ def trial_division(candidate, timelimit=float('inf')):
         return (remainder, 1)
 
 
-def fermat_factorisation(candidate, timelimit=float('inf')):
-    """Fermat's Factorisation method. See pfactors() for details
-    on input and output."""
-    stime = time.time()
-    if candidate % 2 != 0:
-        # Method only works on odd integers.
-        return (candidate, 1)
-
-    a = ceil(sqrt(candidate))
-    b = a * a - candidate
-    while ceil(sqrt(b)) != sqrt(b):
-        a += 1
-        b = a*a - candidate
-
-        if time.time() - stime > timelimit:
-            break
-    if ceil(sqrt(b)) != sqrt(b):
-        return (a+b, 1), (a-b, 1)
-    else:
-        return (candidate, 1)
-
-
 def pfactors(candidate, timelimit=float('inf')):
     """Yields tuples of the form (prime, exponent) for each prime factor of
     candidate as it finds them. If computation is ended early
@@ -67,25 +43,13 @@ def pfactors(candidate, timelimit=float('inf')):
     Candidate: a positive integer to be factored."""
 
     last_factor = None
-    for factor in trial_division(candidate, timelimit / 2):
+    for factor in trial_division(candidate, timelimit):
         last_factor = factor
         if last_factor is not None:
             yield last_factor
     if last_factor is not None:
-        if is_probable_prime(last_factor):
-            return last_factor
-        else:
-            # Run fermat factorisation recursively.
-            fermat_factors = fermat_factorisation(candidate, timelimit / 4)
-            if len(fermat_factors) == 1:
-                # Base case.
-                return fermat_factors[0]
-            else:
-                # Recursive step.
-                for factor in pfactors(fermat_factors[0], timelimit / 8):
-                    yield factor
-                for factor in pfactors(fermat_factors[1], timelimit / 8):
-                    yield factor
+        return last_factor
+
 
 
 def parsing():
